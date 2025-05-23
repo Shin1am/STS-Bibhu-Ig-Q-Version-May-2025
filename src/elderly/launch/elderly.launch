@@ -1,0 +1,21 @@
+<launch>
+	<node pkg="elderly" type="robot.py" name="sim"/>
+	
+<group>
+    <remap from='joy' to='j0'/>
+    <node pkg='joy' name='joy0' type='joy_node'>
+        <param name='dev' type='string' value='/dev/input/js0'/>
+        <param name='autorepeat_rate' type='double' value='0' />
+    </node>
+</group>
+
+<group>
+    <remap from='joy' to='j1'/>
+    <node pkg='joy' name='joy1' type='joy_node'>
+        <param name='dev' type='string' value='/dev/input/js1'/>
+        <param name='autorepeat_rate' type='double' value='0' />
+    </node>
+</group>
+  
+
+</launch>

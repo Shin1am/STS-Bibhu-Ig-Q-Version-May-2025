@@ -1,0 +1,2 @@
+elderly
+-DCATKIN_DEVEL_PREFIX=/home/elderly/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/elderly/catkin_ws/install -G Unix Makefiles

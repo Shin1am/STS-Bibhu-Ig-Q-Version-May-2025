@@ -1,0 +1,8 @@
+prefix=/home/elderly/catkin_ws/devel
+
+Name: elderly
+Description: Description of elderly
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

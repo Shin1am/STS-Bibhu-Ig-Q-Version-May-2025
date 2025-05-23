@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<!-- 
+    this launch file is launched at booting by "robot_upstart" package, 
+    by automatically setting up the systemctl service.
+    this auto-created systemctl service is named as "elderly_sts_bringup". 
+-->
+
+<launch>    
+
+    <node pkg="elderly" type="sts.py" name="stsrobot" output="screen"/>
+	
+    <group>
+        <remap from='joy' to='buttons/left'/>
+        <node pkg='joy' name='joy_button_left' type='joy_node'>
+            <param name='dev' type='string' value='/dev/input/js0'/>
+            <param name='autorepeat_rate' type='double' value='0' />
+        </node>
+    </group>
+
+    <group>
+        <remap from='joy' to='buttons/right'/>
+        <node pkg='joy' name='joy_button_right' type='joy_node'>
+            <param name='dev' type='string' value='/dev/input/js1'/>
+            <param name='autorepeat_rate' type='double' value='0' />
+        </node>
+    </group>
+
+</launch>
