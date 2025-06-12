@@ -190,6 +190,7 @@ class STSRobot:
         self.initialize_communication()  # find devices
         self.move_targets_pose(self.targets_pose_startup)  # move to home pose
         self.speak("Robot initialization complete. Ready for operation")
+        self.speak("Please press the 2 button together to start the STS operation")
 
         # robot operating loop
         rate = rospy.Rate(500)  # hz
@@ -204,10 +205,12 @@ class STSRobot:
                 
                     # stand-up case: left button is pressed, moved up
                     if self.buttons == [1, 0]:
+                        self.speak("Moving Up")
                         self.move_targets_pose(self.targets_md_stand)
 
                     # sit-down case: right button is pressed, moved down
                     elif self.buttons == [0, 1]:
+                        self.speak("Moving Down")
                         self.move_targets_pose(self.targets_md_sit)
                 
             # active case: both buttons are pressed, arm linear actuators are moved
@@ -216,7 +219,7 @@ class STSRobot:
                 # pose 0 to 1: prepare to lift up
                 if self.stage == 0:
                     rospy.loginfo(f"stage: {self.stage}")
-                    self.speak("Stage 0: Preparing to lift. Moving arms to user position")
+                    self.speak("Preparing to lift. Moving arms to user position")
                     self.move_targets_pose(self.targets_pose1)
                     rospy.sleep(3)
                     self.stage += 1
@@ -224,23 +227,28 @@ class STSRobot:
                 # pose 1 to 2: lift up to stand
                 elif self.stage == 1:
                     rospy.loginfo(f"stage: {self.stage}")
-                    self.speak("Stage 1: Lifting user to standing position")
+                    self.speak("Lifting user to standing position")
                     self.move_targets_pose(self.targets_pose2)
                     rospy.sleep(3)
+                    self.speak("Press the left button to move up the robot and press the right button to move down")
+                    self.speak("Now you can walk!")
+                    self.sleep(2)
+                    self.speak("If you want to sit, press the right button until it reach lowest state!, then press button together")
                     self.stage += 1
 
                 # pose 2 to 3: stand to sit
                 elif self.stage == 2:
                     rospy.loginfo(f"stage: {self.stage}")
-                    self.speak("Stage 2: Lowering user to sitting position")
+                    self.speak("Changing the posture back to sitting position")
                     self.move_targets_pose(self.targets_pose3)
                     rospy.sleep(3)
+                    self.speal("press again to get back to home position")
                     self.stage += 1
 
                 # pose 3 to 0: prepare to lift up
                 elif self.stage == 3:
                     rospy.loginfo(f"stage: {self.stage}")
-                    self.speak("Stage 3: Returning to neutral position. Cycle complete")
+                    self.speak("Returning to home position. operation success")
                     self.move_targets_pose(self.targets_pose0)
                     rospy.sleep(3)
                     self.stage = 0
